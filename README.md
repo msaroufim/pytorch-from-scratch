@@ -1,5 +1,5 @@
 # PyTorch models from scratch
-Simple implementations of important PyTorch models without relying on built in layers
+Simple implementations of important PyTorch models without relying on built in layers or libraries. This repo is here for educational purposes.
 
 ## Usage
 ```sh
