@@ -49,6 +49,45 @@ class ConvNeuralNet(nn.Module):
 class ConvolutionalLayer(nn.Module):
     def __init__(self, in_channels : int, out_channels : int, kernel_size : int):
         return NotImplemented
+    
+    def forward(self, x):
+        return NotImplemented
+        subset = ...
+        x = torch.mm(subset, filter)
+        x = torch.sum(x)
+    
+    def convolve(img : torch.Tensor, kernel : torch.Tensor) -> torch.Tensor:
+        tgt_size = calculate_target_size(img.shape[0], kernel.shape[0])
+        k = kernel.shape[0]
+
+        convolved_img = torch.zeros(tgt_size, tgt_size)
+
+        for i in range(tgt_size):
+            for j in range(tgt_size):
+                mat = img[i:i+k, j:j+k]
+                convolved_img[i, j] = torch.sum(torch.mm(mat, kernel))
+        
+        return convolved_img
+
+    @staticmethod
+    def calculate_target_size(img_size : int, kernel_size : int) -> int:
+        # Assume square matrix
+        # Doesn't support strides yet
+        # Doesn't support padding
+        num_pixels = 0
+        for i in range(img_size):
+            added = i + kernel_size
+            if added <= img_size:
+                num_pixels += 1
+        return num_pixels
+    
+    @staticmethod
+    def add_padding_to_image(img : torch.Tensor, padding_width : int) -> torch.Tensor:
+        img_with_padding = torch.zeros(img.shape[0] + padding_width * 2,
+                                       img.shape[0] + padding_width * 2)
+        img_with_padding[padding_width:-padding_width, padding_width:-padding_width] = img 
+        return img_with_padding
+
 
 class MaxPool(nn.Module):
     def __init__(self, kernel_size : int, stride : int):
