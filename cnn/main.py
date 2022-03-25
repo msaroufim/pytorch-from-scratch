@@ -1,5 +1,4 @@
 from torch import nn
-
 # A Convolutional Network 
 class ConvNeuralNet(nn.Module):
 	
@@ -90,5 +89,26 @@ class ConvolutionalLayer(nn.Module):
 
 
 class MaxPool(nn.Module):
-    def __init__(self, kernel_size : int, stride : int):
+    def __init__(self, conv_output, kernel_size : int, stride : int):
         return NotImplemented
+    
+    def get_pools(self, pool_size : int = 2, stride : int = 2) -> torch.Tensor:
+        pools = []
+        for i in torch.arange(self.conv_output.shape, step = self.stride):
+            for j in torch.arange(self.conv_output.shape[0], step = self.stride):
+                mat = self.conv_output[i: i + pool_size, j:j+pool_size]
+                pools.append(mat)
+        return pools
+    
+    def max_pooling(self, pools : torch.Tensor) -> torch.Tensor:
+        num_pools = pools.shape[0]
+        tgt_shape = (int(np.sqrt(num_pools)), int(np.sqrt(num_pools)))
+        pooled = []
+
+        for pool in pools:
+            # Can add any pooling mechanism here
+            pools.append(np.max(pool))
+        
+        return torch.Tensor(pooled).reshape(tgt_shape)
+
+
