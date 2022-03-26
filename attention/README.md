@@ -16,9 +16,7 @@ Take queries multiply by key and divide by root of and then multiply by value th
 
 Then finally run a linear layer
 
-TODO: Explain key, value terminology a bit more
-
-Key value terminology comes from information retrieval
+> We call the input the values. Some (trainable) mechanism assigns a key to each value. Then to each output, some other mechanism assigns a query. These names derive from the datastructure of a key-value store. In that case we expect only one item in our store to have a key that matches the query, which is returned when the query is executed. Attention is a softened version of this: every key in the store matches the query to some extent. All are returned, and we take a sum, weighted by the extent to which each key matches the query - Peter Bloem
 
 ## References
 * [Aladdin Persson video](https://www.youtube.com/watch?v=U0s0f995w14&t=1755s)
